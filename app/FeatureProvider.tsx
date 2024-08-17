@@ -14,11 +14,11 @@ export const FeatureProvider = ({ children }) => {
         {
             name: 'Feature 1',
             frontEnd: {
-                dev: 50,
+                dev: 90,
                 test: 70,
             } ,
             backEnd: {
-                dev: 19,
+                dev: 56,
                 test: 70,
             },
             data: {

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
 
@@ -39,13 +40,13 @@ const Navbar = () => {
         </div>
         <ul className={`md:flex space-x-6 md:space-x-6 ${isOpen ? 'block' : 'hidden'} md:block`}>
           <li className="mt-2 md:mt-0">
-            <Link href="/" className="hover:text-blue-400 transition-colors duration-300">
+            <Link href="/home" className="hover:text-blue-400 transition-colors duration-300">
               Home
             </Link>
           </li>
           <li className="mt-2 md:mt-0">
-            <Link href="/services" className="hover:text-blue-400 transition-colors duration-300">
-              Services
+            <Link href="/detalhes" className="hover:text-blue-400 transition-colors duration-300">
+              Features
             </Link>
           </li>
           <li className="mt-2 md:mt-0">

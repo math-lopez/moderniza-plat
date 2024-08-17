@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { FeatureProvider } from "./FeatureProvider";
+import Navbar from "./components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}><FeatureProvider>
+        <div>
+          <Navbar />
+        </div>
         {children}
       </FeatureProvider></body>
     </html>

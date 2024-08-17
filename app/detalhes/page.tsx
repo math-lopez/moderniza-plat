@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import Dashboard from './components/DashboardComponent';
-import Navbar from './components/Navbar';
+import Dashboard from '../components/DashboardComponent';
+import Navbar from '../components/Navbar';
 
 export default function Home() {
   const [features, setFeatures] = useState([

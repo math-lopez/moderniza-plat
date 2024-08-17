@@ -14,7 +14,7 @@ export default function ProgressBar({ label, progress }) {
   };
   
     return (
-      <div className="mb-4">
+      <div>
         <label className="block text-sm font-medium text-gray-600">{label}</label>
         <div className="w-full bg-gray-200 rounded-full h-5 mt-1">
           <div

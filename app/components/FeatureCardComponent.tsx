@@ -31,13 +31,13 @@ export default function FeatureCard({ feature, onUpdate }) {
         className="bg-white shadow-lg rounded-lg p-6 m-4 w-80 transform hover:scale-105 transition-transform duration-300 cursor-pointer"
         onClick={openModal}
       >
-        <h3 className="text-2xl font-semibold mb-4 text-blue-500">{feature.name}</h3>
+        <h3 className="text-2xl font-semibold mb-2 text-blue-500">{feature.name}</h3>
         <ProgressBar label="Front-End" progress={(feature.frontEnd.dev + feature.frontEnd.test) / 2} />
         <ProgressBar label="Back-End" progress={(feature.backEnd.dev + feature.backEnd.test) / 2} />
         <ProgressBar label="Dados" progress={(feature.data.dev + feature.data.test) / 2} />
         <ProgressBar label="Deploy" progress={feature.deploy} />
         <ProgressBar label="Uso Efetivo" progress={feature.usage} />
-        ({+totalProgress < 100 ? (<h4 className="mt-4 text-lg font-medium text-rose-900">Total Progress: {totalProgress}%</h4>) : (<h4 className="mt-4 text-lg font-medium text-green-500">Total Progress: {totalProgress}%</h4>)})
+        ({+totalProgress < 100 ? (<h4 className="mt-4 text-lg font-medium text-rose-900">Total Progress: {totalProgress}%</h4>): (<h4 className="mt-4 text-lg font-medium text-green-500">Total Progress: {totalProgress}%</h4>)})
 
       </div>
 
