@@ -49,16 +49,6 @@ const Navbar = () => {
               Features
             </Link>
           </li>
-          <li className="mt-2 md:mt-0">
-            <Link href="/about" className="hover:text-blue-400 transition-colors duration-300">
-              About
-            </Link>
-          </li>
-          <li className="mt-2 md:mt-0">
-            <Link href="/contact" className="hover:text-blue-400 transition-colors duration-300">
-              Contact
-            </Link>
-          </li>
         </ul>
       </div>
     </nav>
