@@ -26,13 +26,13 @@ export default function AddFeatureModal({ isOpen, onClose, onSubmit }) {
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold mb-4 text-blue-900">Add New Feature</h2>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Feature Name</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2 text-rose-900">Feature Name</label>
           <input
             type="text"
             name="name"
             value={feature.name}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg"
+            className="w-full px-3 py-2 border rounded-lg text-gray-700"
             placeholder="Enter feature name"
           />
         </div>

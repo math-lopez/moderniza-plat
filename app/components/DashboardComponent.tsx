@@ -24,13 +24,13 @@ export default function Dashboard() {
   };
 
   const handleRemoveFeature = (feature) => {
+    console.log(feature)
+    deleteFeature(feature.id);
     setFeatures(features.filter((f) => f.name !== feature.name));
   };
 
   const openConfirmRemoveModal = (feature) => {
     setFeatureToRemove(feature);
-    console.log(feature.id)
-    deleteFeature(feature.id);
     setIsConfirmRemoveOpen(true);
   };
 
