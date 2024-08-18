@@ -16,6 +16,7 @@ export default function AddFeatureModal({ isOpen, onClose, onSubmit }) {
 
   const handleSubmit = () => {
     onSubmit(feature);
+    setFeature({ name: '', frontEnd: { dev: 0, test: 0, deploy: 0 }, backEnd: { dev: 0, test: 0, deploy: 0 }, data: { dev: 0, test: 0, deploy: 0 }, usage: 0 });
     onClose(); // Fechar o modal após o envio
   };
 

@@ -23,7 +23,6 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
 
   const handleDeployChange = (setter) => (e) => {
     const value = e.target.value;
-    console.log(value);
     switch (value) {
       case 'dev':
         setter(percentDeployDev);

@@ -39,7 +39,6 @@ export const FeatureProvider = ({ children }) => {
 
             if (response.ok) {
                 const savedFeature = await response.json();
-                console.log(savedFeature);
                 setFeatures([...features, savedFeature]); // Adiciona a nova feature ao estado atual
             } else {
                 console.error('Erro ao inserir o dado:', response.status);
@@ -50,8 +49,6 @@ export const FeatureProvider = ({ children }) => {
     };
 
     const updateFeature = async (id, feature) => {
-        console.log(id, feature);
-
         try {
             const response = await fetch(`http://localhost:3005/features/${id}`, {
                 method: 'PUT',

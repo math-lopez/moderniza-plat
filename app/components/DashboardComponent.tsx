@@ -24,7 +24,6 @@ export default function Dashboard() {
   };
 
   const handleRemoveFeature = (feature) => {
-    console.log(feature)
     deleteFeature(feature.id);
     setFeatures(features.filter((f) => f.name !== feature.name));
   };

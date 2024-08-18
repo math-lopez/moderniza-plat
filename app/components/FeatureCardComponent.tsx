@@ -2,6 +2,7 @@
 
 import ProgressBar from './ProgressBarComponent';
 import FeatureDetailsModal from './FeatureDetailModalComponent';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 
 export default function FeatureCard({ feature, onUpdate, onRemove }) {
@@ -49,7 +50,6 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
 
   const updateFeature = (feature) => {
     onUpdate(feature);
-    console.log(feature)
     setbackEndProgress((feature.backEnd.dev + feature.backEnd.test + feature.backEnd.deploy) / divisorDeItensPorFrente);
     setdataEndProgress((feature.data.dev + feature.data.test + feature.data.deploy) / divisorDeItensPorFrente);
     setfrontEndProgress((feature.frontEnd.dev + feature.frontEnd.test + feature.frontEnd.deploy) / divisorDeItensPorFrente);
@@ -92,29 +92,15 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
 
       {/* Botão de Remoção */}
       <button
-        onClick={(e) => {
-          e.stopPropagation(); // Impede a abertura do modal ao clicar no botão de remoção
-          onRemove(feature);
-        }}
-        className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full p-2 shadow-md"
-        title="Remove Feature"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 01-1.995-1.858L5 7m5-4h4a2 2 0 012 2v1H8V5a2 2 0 012-2z"
-          />
-        </svg>
-      </button>
-
+      onClick={(e) => {
+        e.stopPropagation(); // Impede a abertura do modal ao clicar no botão de remoção
+        onRemove(feature);
+      }}
+      className="absolute top-2 right-2 text-red-500 hover:text-red-700 transition duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full p-2 shadow-md"
+      title="Remove Feature"
+    >
+      <DeleteIcon className="w-6 h-6" />
+    </button>
       {isModalOpen && (
         <FeatureDetailsModal
           feature={feature}
