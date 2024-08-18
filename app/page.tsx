@@ -1,14 +1,14 @@
 "use client";
 
-import Dashboard from './components/DashboardComponent';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <div>
-      <div className="min-h-screen bg-gray-100 py-5">
-        <Dashboard />
-      </div>
-    </div>
+  const router = useRouter();
 
-  );
+  useEffect(() => {
+    router.replace('/home');
+  }, [router]);
+
+  return null;
 }
