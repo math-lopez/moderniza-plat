@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 export default function AddFeatureModal({ isOpen, onClose, onSubmit }) {
   const [feature, setFeature] = useState({
     name: '',
-    frontEnd: { dev: 0, test: 0 },
-    backEnd: { dev: 0, test: 0 },
-    data: { dev: 0, test: 0 },
-    deploy: 0,
+    frontEnd: { dev: 0, test: 0, deploy: 0 },
+    backEnd: { dev: 0, test: 0, deploy: 0 },
+    data: { dev: 0, test: 0 , deploy: 0 },
     usage: 0,
   });
 

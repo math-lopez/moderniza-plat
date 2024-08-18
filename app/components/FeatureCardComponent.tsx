@@ -5,18 +5,23 @@ import FeatureDetailsModal from './FeatureDetailModalComponent';
 import { useState } from 'react';
 
 export default function FeatureCard({ feature, onUpdate, onRemove }) {
+  const divisorDeItensPorFrente = 3;
+  const divisorTotalGeral = 4;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditingTitle, setIsEditingTitle] = useState(true);
   const [title, setTitle] = useState(feature.name);
+  const [frontEndProgress, setfrontEndProgress] = useState((feature.frontEnd.dev + feature.frontEnd.test + feature.frontEnd.deploy) / divisorDeItensPorFrente);
+  const [backEndProgress, setbackEndProgress] = useState((feature.backEnd.dev + feature.backEnd.test + feature.backEnd.deploy) / divisorDeItensPorFrente);
+  const [dataEndProgress, setdataEndProgress] = useState((feature.data.dev + feature.data.test + feature.data.deploy) / divisorDeItensPorFrente);
 
   const totalProgress = (
     (
-      (feature.frontEnd.dev + feature.frontEnd.test) / 2 +
-      (feature.backEnd.dev + feature.backEnd.test) / 2 +
-      (feature.data.dev + feature.data.test) / 2 +
-      feature.deploy +
+      (feature.frontEnd.dev + feature.frontEnd.test + feature.frontEnd.deploy) / divisorDeItensPorFrente +
+      (feature.backEnd.dev + feature.backEnd.test + feature.backEnd.deploy) / divisorDeItensPorFrente +
+      (feature.data.dev + feature.data.test + feature.data.deploy) / divisorDeItensPorFrente +
       feature.usage
-    ) / 5
+    ) / divisorTotalGeral
   ).toFixed(2);
 
   const openModal = () => setIsModalOpen(true);
@@ -42,8 +47,12 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
     }
   };
 
-  const updateFeature = (updatedFeature) => {
-    onUpdate(updatedFeature);
+  const updateFeature = (feature) => {
+    onUpdate(feature);
+    console.log(feature)
+    setbackEndProgress((feature.backEnd.dev + feature.backEnd.test + feature.backEnd.deploy) / divisorDeItensPorFrente);
+    setdataEndProgress((feature.data.dev + feature.data.test + feature.data.deploy) / divisorDeItensPorFrente);
+    setfrontEndProgress((feature.frontEnd.dev + feature.frontEnd.test + feature.frontEnd.deploy) / divisorDeItensPorFrente);
   };
 
   return (
@@ -70,10 +79,9 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
             {title}
           </h3>
         )}
-        <ProgressBar label="Front-End" progress={(feature.frontEnd.dev + feature.frontEnd.test) / 2} />
-        <ProgressBar label="Back-End" progress={(feature.backEnd.dev + feature.backEnd.test) / 2} />
-        <ProgressBar label="Dados" progress={(feature.data.dev + feature.data.test) / 2} />
-        <ProgressBar label="Deploy" progress={feature.deploy} />
+        <ProgressBar label="Front-End" progress={frontEndProgress.toPrecision(4)} />
+        <ProgressBar label="Back-End" progress={backEndProgress.toPrecision(4)} />
+        <ProgressBar label="Dados" progress={dataEndProgress.toPrecision(4)} />
         <ProgressBar label="Uso Efetivo" progress={feature.usage} />
         {+totalProgress < 100 ? (
           <h4 className="mt-4 text-lg font-medium text-rose-900">Total Progress: {totalProgress}%</h4>

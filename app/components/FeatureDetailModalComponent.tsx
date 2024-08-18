@@ -1,13 +1,19 @@
 import { useState } from 'react';
 
 export default function FeatureDetailsModal({ feature, closeModal, updateFeature }) {
+  const percentDeployDev = 33;
+  const percentDeployHomol = 66;
+  const percentDeployProd = 100;
+  const percentLocal = 0;
   const [frontEndDev, setFrontEndDev] = useState(feature.frontEnd.dev);
   const [frontEndTest, setFrontEndTest] = useState(feature.frontEnd.test);
+  const [frontEndDeploy, setFrontEndDeploy] = useState(feature.frontEnd.deploy);
   const [backEndDev, setBackEndDev] = useState(feature.backEnd.dev);
   const [backEndTest, setBackEndTest] = useState(feature.backEnd.test);
+  const [backDeploy, setBackDeploy] = useState(feature.backEnd.deploy);
   const [dataDev, setDataDev] = useState(feature.data.dev);
   const [dataTest, setDataTest] = useState(feature.data.test);
-  const [deploy, setDeploy] = useState(feature.deploy);
+  const [dataDeploy, setDataDeploy] = useState(feature.data.deploy);
   const [usage, setUsage] = useState(feature.usage >= 100 ? 'Plugado' : 'Não plugado');
 
   const handleInputChange = (setter) => (e) => {
@@ -15,12 +21,24 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
     setter(value);
   };
 
-  const handleDeployChange = (e) => {
+  const handleDeployChange = (setter) => (e) => {
     const value = e.target.value;
-    if (value === 'dev') setDeploy(33);
-    else if (value === 'homol') setDeploy(66);
-    else if (value === 'prod') setDeploy(100);
+    console.log(value);
+    switch (value) {
+      case 'dev':
+        setter(percentDeployDev);
+        break;
+      case 'homol':
+        setter(percentDeployHomol);
+        break;
+      case 'prod':
+        setter(percentDeployProd);
+        break;
+      default:
+        setter(percentLocal);
+    }
   };
+
 
   const handleUsageChange = (e) => {
     setUsage(e.target.value);
@@ -29,10 +47,9 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
   const handleSave = () => {
     const updatedFeature = {
       ...feature,
-      frontEnd: { dev: frontEndDev, test: frontEndTest },
-      backEnd: { dev: backEndDev, test: backEndTest },
-      data: { dev: dataDev, test: dataTest },
-      deploy,
+      frontEnd: { dev: frontEndDev, test: frontEndTest, deploy: frontEndDeploy },
+      backEnd: { dev: backEndDev, test: backEndTest, deploy: backDeploy },
+      data: { dev: dataDev, test: dataTest, deploy: dataDeploy },
       usage: usage === 'Plugado' ? 100 : 0,
     };
     updateFeature(updatedFeature);
@@ -45,6 +62,7 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
         <h2 className="text-xl font-semibold mb-4 text-blue-500">{feature.name} - Editar Detalhes</h2>
 
         <div className="grid grid-cols-2 gap-6">
+          {/*FrontEnd Session */}
           <div>
             <h3 className="font-semibold text-blue-500">Front-End:</h3>
             <label className="block text-rose-900">Desenvolvimento:</label>
@@ -65,8 +83,21 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
               max={100}
               style={{ height: '40px' }}
             />
+            <label className="block text-rose-900">Ambiente:</label>
+            <select
+              value={frontEndDeploy === percentDeployProd ? 'prod' : frontEndDeploy === percentDeployHomol ? 'homol' : frontEndDeploy === percentDeployDev ? 'dev' : 'local'}
+              onChange={handleDeployChange(setFrontEndDeploy)}
+              className="border border-gray-300 rounded p-2 w-full text-gray-900"
+              style={{ height: '40px' }}
+            >
+              <option value="local">Local (0%)</option>
+              <option value="dev">Desenvolvimento (33%)</option>
+              <option value="homol">Homologação (66%)</option>
+              <option value="prod">Produção (100%)</option>
+            </select>
           </div>
 
+          {/*BackEnd Session */}
           <div>
             <h3 className="font-semibold text-blue-500">Back-End:</h3>
             <label className="block text-rose-900">Desenvolvimento:</label>
@@ -87,8 +118,22 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
               max={100}
               style={{ height: '40px' }}
             />
+            <label className="block text-rose-900">Ambiente:</label>
+            <select
+              value={backDeploy === percentDeployProd ? 'prod' : backDeploy === percentDeployHomol ? 'homol' : backDeploy === percentDeployDev ? 'dev' : 'local'}
+              onChange={handleDeployChange(setBackDeploy)}
+              className="border border-gray-300 rounded p-2 w-full text-gray-900"
+              style={{ height: '40px' }}
+            >
+
+              <option value="default">Local (0%)</option>
+              <option value="dev">Desenvolvimento (33%)</option>
+              <option value="homol">Homologação (66%)</option>
+              <option value="prod">Produção (100%)</option>
+            </select>
           </div>
 
+          {/*Data Session */}
           <div>
             <h3 className="font-semibold text-blue-500">Dados:</h3>
             <label className="block text-rose-900">Desenvolvimento:</label>
@@ -109,17 +154,14 @@ export default function FeatureDetailsModal({ feature, closeModal, updateFeature
               max={100}
               style={{ height: '40px' }}
             />
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-blue-500">Deploy:</h3>
             <label className="block text-rose-900">Ambiente:</label>
             <select
-              value={deploy === 100 ? 'prod' : deploy === 66 ? 'homol' : 'dev'}
-              onChange={handleDeployChange}
+              value={dataDeploy === percentDeployProd ? 'prod' : dataDeploy === percentDeployHomol ? 'homol' : dataDeploy === percentDeployDev ? 'dev' : 'local'}
+              onChange={handleDeployChange(setDataDeploy)}
               className="border border-gray-300 rounded p-2 w-full text-gray-900"
               style={{ height: '40px' }}
             >
+              <option value="local">Local (0%)</option>
               <option value="dev">Desenvolvimento (33%)</option>
               <option value="homol">Homologação (66%)</option>
               <option value="prod">Produção (100%)</option>

@@ -4,6 +4,8 @@ import { FeatureContext } from '../FeatureProvider';
 import AddFeatureModal from './AddFeatureModal';
 import ConfirmRemoveModal from './ConfirmRemocaoFeature';
 
+const _ = require('lodash');
+
 export default function Dashboard() {
   const { features, setFeatures, addFeature, deleteFeature, updateFeature } = useContext(FeatureContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,12 +14,9 @@ export default function Dashboard() {
 
   const handleUpdateFeature = async (upFeature) => {
     const updatedFeatures = await features.filter((feature) => feature.id === upFeature.id);
-    console.log(JSON.stringify(upFeature), JSON.stringify(updatedFeatures))
-    if(JSON.stringify(upFeature) !== JSON.stringify(updatedFeatures)){
-      console.log("asdasdas")
-      return;
+    if(!_.isEqual(updatedFeatures[0], upFeature)){
+      updateFeature(updatedFeatures[0].id, upFeature);
     }
-    updateFeature(updatedFeatures[0].id, updateFeature);
   };
 
   const handleAddFeature = (newFeature) => {
