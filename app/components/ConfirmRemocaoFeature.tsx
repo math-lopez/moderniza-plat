@@ -1,6 +1,13 @@
 import React from 'react';
 
-export default function ConfirmRemoveModal({ isOpen, onClose, onConfirm, feature }) {
+interface ConfirmRemoveModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (feature: any) => void;
+  feature: any;
+}
+
+export default function ConfirmRemoveModal({ isOpen, onClose, onConfirm, feature }: ConfirmRemoveModalProps) {
   if (!isOpen) return null;
 
   return (

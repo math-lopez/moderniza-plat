@@ -1,18 +1,30 @@
 "use client";
 
-export default function FeatureSection({ title, dev, test, deploy, usage, setDev, setTest, setDeploy, setUsage }) {
+interface FeatureSectionProps {
+    title: string;
+    dev: number;
+    test: number;
+    deploy: number;
+    usage: number;
+    setDev: (value: number) => void;
+    setTest: (value: number) => void;
+    setDeploy: (value: number) => void;
+    setUsage: (value: number) => void;
+}
+
+export default function FeatureSection({ title, dev, test, deploy, usage, setDev, setTest, setDeploy, setUsage }: FeatureSectionProps) {
     const percentDeployDev = 33;
     const percentDeployHomol = 66;
     const percentDeployProd = 100;
     const percentLocal = 0;
 
-    const handleInputChange = (setter) => (e) => {
-        const value = Math.min(100, Math.max(0, Number(e.target.value)));
+    const handleInputChange = (setter: any) => (event: any) => {
+        const value = Math.min(100, Math.max(0, Number(event.target.value)));
         setter(value);
     };
 
-    const handleDeployChange = (setter) => (e) => {
-        const value = e.target.value;
+    const handleDeployChange = (setter: any) => (event: any) => {
+        const value = event.target.value;
         switch (value) {
             case 'dev':
                 setter(percentDeployDev);
@@ -28,8 +40,8 @@ export default function FeatureSection({ title, dev, test, deploy, usage, setDev
         }
     };
 
-    const handleUsageChange = (setter) => (e) => {
-        const value = Number(e.target.value); // Converte o valor para número
+    const handleUsageChange = (setter: any) => (event: any) => {
+        const value = Number(event.target.value); // Converte o valor para número
         setter(value);
     };
 

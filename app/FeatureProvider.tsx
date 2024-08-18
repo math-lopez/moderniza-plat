@@ -1,11 +1,14 @@
 "use client";
 import React, { createContext, useEffect, useState } from 'react';
+import IFeatureContextType from './utils/interfaces/IFeatureContextType';
+import { Feature } from './utils/interfaces/Feature';
 
-// Crie o contexto
-export const FeatureContext = createContext();
+export const FeatureContext = createContext<IFeatureContextType | undefined>(undefined);
+interface FeatureProviderProps {
+    children: React.ReactNode;
+}
 
-// Crie o provedor do contexto
-export const FeatureProvider = ({ children }) => {
+export const FeatureProvider = ({ children }: FeatureProviderProps) => {
     const [features, setFeatures] = useState<any[]>([]);
 
     useEffect(() => {
@@ -27,7 +30,7 @@ export const FeatureProvider = ({ children }) => {
         fetchFeatures();
     }, []);
 
-    const addFeature = async (newFeature) => {
+    const addFeature = async (newFeature: Feature) => {
         try {
             const response = await fetch('http://localhost:3005/features', {
                 method: 'POST',
@@ -48,7 +51,7 @@ export const FeatureProvider = ({ children }) => {
         }
     };
 
-    const updateFeature = async (id, feature) => {
+    const updateFeature = async (id: number, feature: Feature) => {
         try {
             const response = await fetch(`http://localhost:3005/features/${id}`, {
                 method: 'PUT',
@@ -60,7 +63,7 @@ export const FeatureProvider = ({ children }) => {
 
             if (response.ok) {
                 const updatedFeatureData = await response.json();
-                setFeatures(features.map((feature) => 
+                setFeatures(features.map((feature) =>
                     feature.id === id ? updatedFeatureData : feature
                 ));
             } else {
@@ -71,7 +74,7 @@ export const FeatureProvider = ({ children }) => {
         }
     };
 
-    const deleteFeature = async (id) => {
+    const deleteFeature = async (id: number) => {
         try {
             const response = await fetch(`http://localhost:3005/features/${id}`, {
                 method: 'DELETE',

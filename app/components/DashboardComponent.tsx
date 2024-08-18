@@ -3,32 +3,38 @@ import FeatureCard from './FeatureCardComponent';
 import { FeatureContext } from '../FeatureProvider';
 import AddFeatureModal from './AddFeatureModal';
 import ConfirmRemoveModal from './ConfirmRemocaoFeature';
+import { Feature } from '../utils/interfaces/Feature';
 
 const _ = require('lodash');
 
 export default function Dashboard() {
-  const { features, setFeatures, addFeature, deleteFeature, updateFeature } = useContext(FeatureContext);
+  const context = useContext(FeatureContext);
+  if (!context) {
+    throw new Error('useContext must be used within a FeatureProvider');
+  }
+
+  const { features, setFeatures, addFeature, deleteFeature, updateFeature } = context;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] = useState(false);
-  const [featureToRemove, setFeatureToRemove] = useState(null);
+  const [featureToRemove, setFeatureToRemove] = useState<Feature | null>(null);
 
-  const handleUpdateFeature = async (upFeature) => {
-    const updatedFeatures = await features.filter((feature) => feature.id === upFeature.id);
+  const handleUpdateFeature = async (upFeature: Feature) => {
+    const updatedFeatures = await features.filter((feature: Feature) => feature.id === upFeature.id);
     if(!_.isEqual(updatedFeatures[0], upFeature)){
       updateFeature(updatedFeatures[0].id, upFeature);
     }
   };
 
-  const handleAddFeature = (newFeature) => {
+  const handleAddFeature = (newFeature: Feature) => {
     addFeature(newFeature);
   };
 
-  const handleRemoveFeature = (feature) => {
+  const handleRemoveFeature = (feature: Feature) => {
     deleteFeature(feature.id);
-    setFeatures(features.filter((f) => f.name !== feature.name));
+    setFeatures(features.filter((ft: Feature) => ft.name !== feature.name));
   };
 
-  const openConfirmRemoveModal = (feature) => {
+  const openConfirmRemoveModal = (feature: Feature) => {
     setFeatureToRemove(feature);
     setIsConfirmRemoveOpen(true);
   };

@@ -3,20 +3,25 @@ import React, { useState } from 'react';
 export const resetFeature = () => {
   return {
     name: '',
-    frontEnd: { dev: 0, test: 0, deploy: 0 },
-    backEnd: { dev: 0, test: 0, deploy: 0 },
-    data: { dev: 0, test: 0, deploy: 0 },
-    usage: 0,
+    frontEnd: { dev: 0, test: 0, deploy: 0, usage: 0 },
+    backEnd: { dev: 0, test: 0, deploy: 0, usage: 0 },
+    data: { dev: 0, test: 0, deploy: 0, usage: 0 }
   };
 };
 
-export default function AddFeatureModal({ isOpen, onClose, onSubmit }) {  
+interface AddFeatureModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (feature: any) => void;
+}
+
+export default function AddFeatureModal({ isOpen, onClose, onSubmit }: AddFeatureModalProps) {  
   const [feature, setFeature] = useState(resetFeature());
 
   
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
     setFeature({ ...feature, [name]: value });
   };
 

@@ -5,8 +5,10 @@ import FeatureDetailsModal from './FeatureDetailModalComponent';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState, useEffect } from 'react';
+import { getTextColorProgress } from '../utils/ProgressFeature';
+import { Feature, FeatureCardProps } from '../utils/interfaces/Feature';
 
-export default function FeatureCard({ feature, onUpdate, onRemove }) {
+export default function FeatureCard({ feature, onUpdate, onRemove }: FeatureCardProps) {
   const divisorDeItensPorFrente = 4;
   const divisorTotalGeral = 3;
 
@@ -14,22 +16,26 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
   const [isEditingTitle, setIsEditingTitle] = useState(true);
   const [title, setTitle] = useState(feature.name);
 
-  // Estados para progresso
   const [frontEndProgress, setFrontEndProgress] = useState(calculateProgress(feature.frontEnd));
   const [backEndProgress, setBackEndProgress] = useState(calculateProgress(feature.backEnd));
   const [dataEndProgress, setDataEndProgress] = useState(calculateProgress(feature.data));
   const [totalProgress, setTotalProgress] = useState(calculateTotalProgress(feature));
 
   useEffect(() => {
-    // Atualiza o totalProgress sempre que qualquer progresso for atualizado
-    setTotalProgress(calculateTotalProgress({ frontEnd: { dev: frontEndProgress, test: frontEndProgress, deploy: frontEndProgress, usage: frontEndProgress }, backEnd: { dev: backEndProgress, test: backEndProgress, deploy: backEndProgress, usage: backEndProgress }, data: { dev: dataEndProgress, test: dataEndProgress, deploy: dataEndProgress, usage: dataEndProgress } }));
+    setTotalProgress(calculateTotalProgress(
+      {
+        frontEnd: { dev: frontEndProgress, test: frontEndProgress, deploy: frontEndProgress, usage: frontEndProgress },
+        backEnd: { dev: backEndProgress, test: backEndProgress, deploy: backEndProgress, usage: backEndProgress },
+        data: { dev: dataEndProgress, test: dataEndProgress, deploy: dataEndProgress, usage: dataEndProgress },
+        id: feature.id, name: feature.name
+      }));
   }, [frontEndProgress, backEndProgress, dataEndProgress]);
 
-  function calculateProgress(frente) {
+  function calculateProgress(frente: Front) {
     return (Number(frente.dev) + Number(frente.test) + Number(frente.deploy) + Number(frente.usage)) / divisorDeItensPorFrente;
   }
 
-  function calculateTotalProgress(updatedFeature) {
+  function calculateTotalProgress(updatedFeature: Feature) {
     return (
       (
         calculateProgress(updatedFeature.frontEnd) +
@@ -43,8 +49,8 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
     setIsEditingTitle(true);
   };
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+  const handleTitleChange = (event: any) => {
+    setTitle(event.target.value);
   };
 
   const handleTitleBlur = () => {
@@ -53,13 +59,7 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
     onUpdate(updatedFeature);
   };
 
-  const handleTitleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleTitleBlur();
-    }
-  };
-
-  const updateFeature = (updatedFeature) => {
+  const updateFeature = (updatedFeature: Feature) => {
     setFrontEndProgress(calculateProgress(updatedFeature.frontEnd));
     setBackEndProgress(calculateProgress(updatedFeature.backEnd));
     setDataEndProgress(calculateProgress(updatedFeature.data));
@@ -79,7 +79,6 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
             value={title}
             onChange={handleTitleChange}
             onBlur={handleTitleBlur}
-            onKeyPress={handleTitleKeyPress}
             autoFocus
             className="text-2xl font-semibold mb-2 text-blue-500 w-full p-2 border-b-2 border-blue-500 focus:outline-none"
           />
@@ -94,8 +93,8 @@ export default function FeatureCard({ feature, onUpdate, onRemove }) {
         <ProgressBar label="Front-End" progress={frontEndProgress} />
         <ProgressBar label="Back-End" progress={backEndProgress} />
         <ProgressBar label="Dados" progress={dataEndProgress} />
-        <h4 className={`mt-4 text-lg font-medium ${totalProgress < 100 ? 'text-rose-900' : 'text-green-500'}`}>
-          Total Progress: {totalProgress}%
+        <h4 className={`mt-4 text-lg font-medium ${getTextColorProgress(Number(totalProgress))}`}>
+          Progresso total: {totalProgress}%
         </h4>
       </div>
 

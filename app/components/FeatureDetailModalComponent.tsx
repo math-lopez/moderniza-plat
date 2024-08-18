@@ -1,7 +1,14 @@
 import { useState } from "react";
 import FeatureSection from "./FeatureDetailSection";
+import { Feature } from "../utils/interfaces/Feature";
 
-export default function FeatureDetailsModal({ feature, closeModal, updateFeature }) {
+interface FeatureDetailsModalProps {
+  feature: Feature;
+  closeModal: () => void;
+  updateFeature: (feature: Feature) => void;
+}
+
+export default function FeatureDetailsModal({ feature, closeModal, updateFeature }: FeatureDetailsModalProps) {
   const [frontEndDev, setFrontEndDev] = useState(feature.frontEnd.dev);
   const [frontEndTest, setFrontEndTest] = useState(feature.frontEnd.test);
   const [frontEndDeploy, setFrontEndDeploy] = useState(feature.frontEnd.deploy);
